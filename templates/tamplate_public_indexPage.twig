@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/public/css/index.css">
+    <link rel="stylesheet" href="/libs/fontawesome/fontawesome.css">
+    {% block header %}{% endblock %}
+    <title>Форум {% block pageTitle %}{% endblock %}</title>
+</head>
+<body>
+<header>
+    <div class="page-logo"></div>
+    <div class="page-nav">
+        <ul class="page-nav__navbar">
+            <li class="page-nav__navbar-item">Категории</li>
+            <li class="page-nav__navbar-item">Популярное</li>
+            <li class="page-nav__navbar-item">Новое</li>
+            <li class="page-nav__navbar-item">Не прочитанное</li>
+        </ul>
+    </div>
+    <div class="page-search-bar__wrapper">
+        <div class="input-icon">
+            <i class="fal fa-search"></i>
+        </div>
+        <input type="text" name="search" id="searchbar" class="page-search-bar" placeholder="Что ищем?">
+    </div>
+    <div class="page-profile__wrapper">
+        <button type="button" class="button button-default">Войти</button>
+        <button type="button" class="button button-primary">Присоединиться</button>
+    </div>
+</header>
+<section class="page-content"></section>
+{% block scripts %}{% endblock %}
+</body>
+</html>

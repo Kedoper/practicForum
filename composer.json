@@ -1,0 +1,10 @@
+{
+    "require": {
+        "klein/klein": "^2.1",
+        "filp/whoops": "^2.5",
+        "gherkins/regexpbuilderphp": "^0.8.0",
+        "fzaninotto/faker": "^1.9",
+        "twig/twig": "^3.0",
+        "vlucas/phpdotenv": "^3.6"
+    }
+}
