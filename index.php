@@ -18,12 +18,49 @@ if (boolval(getenv("DEBUG"))) {
 include './libs/rb/connect.php';
 
 $router = new \Klein\Klein();
+$_SESSION['logged_user'][1] = 'pklds';
+function isLoggedUser(): bool
+{
+    if (!empty($_SESSION['logged_user'])) {
+        return true;
+    }
+    return false;
+}
 
+function callAPI(string $section, string $method, ?array $params = []): array
+{
+    $host = $_SERVER['HTTP_HOST'];
+    $curl = curl_init("http://$host/api/$section.$method");
+    curl_setopt($curl, CURLOPT_POST, 1);
+    curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($params));
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+    $response = curl_exec($curl);
+    return json_decode($response, true);
+}
 
 $router->with('/?', function () use ($router, $twig) {
     $router->get("/", function () use ($twig) {
-        return $twig->render('public_index.twig');
+        return $twig->render('public_index.twig', [
+            'userLogged' => isLoggedUser(),
+            'threadsData' => callAPI('threads', 'gen')
+        ]);
     });
+    $router->get("/thread/[i:id]", function () use ($twig) {
+        return $twig->render('public_thread.twig', [
+            'userLogged' => isLoggedUser(),
+            'threadData' => callAPI('threads', 'get')
+        ]);
+    });
+});
+
+$router->respond(['GET', 'POST'], '/api/[*:section].[*:method]', function ($req) use ($router) {
+    $section = $req->section;
+    $method = $req->method;
+    if (file_exists("./api/$section/$method.php")) {
+        include_once "./api/$section/$method.php";
+    } else {
+        echo json_encode([]);
+    }
 });
 
 $router->dispatch();

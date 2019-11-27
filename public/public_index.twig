@@ -1,1 +1,100 @@
 {% extends "tamplate_public_indexPage.twig" %}
+
+{% block pageContent %}
+    <div class="threads">
+        <div class="threads-header__wrapper">
+            <div class="threads-header">
+                <div class="threads-header__item">
+                    <span>Тема</span>
+                </div>
+                <div class="threads-header__item">
+                    <span>Категория</span>
+                </div>
+                <div class="threads-header__item">
+                    <ul class="threads-header__item-list">
+                        <li class="threads-header__item-list__item">Лайков</li>
+                        <li class="threads-header__item-list__item">Ответов</li>
+                        <li class="threads-header__item-list__item">Просмотров</li>
+                        <li class="threads-header__item-list__item">Активность</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="threads-list">
+            {% for threadItem in threadsData.threads %}
+                <div class="threads-list__item threads-item" data-thread_id="{{ threadItem.id }}">
+                    <div class="threads-item__avatar">
+                        <div class="simple-avatar"></div>
+                    </div>
+                    <div class="threads-item__head">
+                        <div class="threads-item__head-title">
+                            <h4>{{ threadItem.title }}</h4>
+                        </div>
+                        <div class="threads-item__head-tags">
+                            <ul class="threads-item__category-items">
+                                {% for tag in threadItem.tags %}
+                                    <li class="threads-item__category-items__item tag">{{ tag }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div> {# ??? #}
+                    </div>
+                    <div class="threads-item__category">
+                        <ul class="threads-item__category-items">
+                            {% for category in threadItem.category %}
+                                <li class="threads-item__category-items__item">{{ category }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="threads-item__likes">
+                        <span>{{ threadItem.likes }}</span>
+                    </div>
+                    <div class="threads-item__replies">
+                        <span>{{ threadItem.replies }}</span>
+                    </div>
+                    <div class="threads-item__views">
+                        <span>{{ threadItem.views }}</span>
+                    </div>
+                    <div class="threads-item__activity">
+                        <span>{{ threadItem.activity }}</span>
+                    </div>
+                </div>
+            {% endfor %}
+            {#                <div class="threads-list__item threads-item threads-item__status-top">#}
+            {#                    <div class="threads-item__avatar">#}
+            {#                        <div class="simple-avatar"></div>#}
+            {#                    </div>#}
+            {#                    <div class="threads-item__head">#}
+            {#                        <div class="threads-item__head-title">#}
+            {#                            <h4>Halloween Costume Contest 2018</h4>#}
+            {#                        </div>#}
+            {#                        <div class="threads-item__head-tags">#}
+            {#                            <ul class="threads-item__category-items">#}
+            {#                                <li class="threads-item__category-items__item">politics game</li>#}
+            {#                                <li class="threads-item__category-items__item">politics more games</li>#}
+
+            {#                            </ul>#}
+            {#                        </div> #}{# ??? #}
+            {#                    </div>#}
+            {#                    <div class="threads-item__category">#}
+            {#                        <ul class="threads-item__category-items">#}
+            {#                            <li class="threads-item__category-items__item">politics game</li>#}
+            {#                        </ul>#}
+            {#                    </div>#}
+            {#                    <div class="threads-item__likes">#}
+            {#                        <span>200</span>#}
+            {#                    </div>#}
+            {#                    <div class="threads-item__replies">#}
+            {#                        <span>200</span>#}
+            {#                    </div>#}
+            {#                    <div class="threads-item__views">#}
+            {#                        <span>200</span>#}
+            {#                    </div>#}
+            {#                    <div class="threads-item__activity">#}
+            {#                        <span>200</span>#}
+            {#                    </div>#}
+            {#                </div>#}
+
+
+        </div>
+    </div>
+{% endblock %}

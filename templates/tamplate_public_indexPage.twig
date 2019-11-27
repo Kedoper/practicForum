@@ -25,14 +25,36 @@
         <div class="input-icon">
             <i class="fal fa-search"></i>
         </div>
-        <input type="text" name="search" id="searchbar" class="page-search-bar" placeholder="Что ищем?">
+        <input type="text" name="search" id="searchbar" class="page-search-bar" placeholder="Поиск">
     </div>
     <div class="page-profile__wrapper">
-        <button type="button" class="button button-default">Войти</button>
-        <button type="button" class="button button-primary">Присоединиться</button>
+        {% if userLogged %}
+            <div class="bell-icon">
+                <i class="fas fa-bell"></i>
+            </div>
+            <div class="page-profile__user-box">
+                <div class="page-profile__user-avatar">
+                    <span>K</span>
+                </div>
+                <div class="page-profile__user-name">
+                    <span>kFerst</span>
+                </div>
+            </div>
+        {% else %}
+            <button type="button" class="button button-default">Войти</button>
+            <button type="button" class="button button-primary">Присоединиться</button>
+        {% endif %}
     </div>
+    {% if userLogged %}
+        <button type="button" class="button button-transparent new-thread">
+            <i class="fal fa-plus"></i>
+        </button>
+    {% endif %}
 </header>
-<section class="page-content"></section>
+<section class="page-content">
+    {% block pageContent %}
+    {% endblock %}
+</section>
 {% block scripts %}{% endblock %}
 </body>
 </html>
