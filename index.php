@@ -45,10 +45,11 @@ $router->with('/?', function () use ($router, $twig) {
             'threadsData' => callAPI('threads', 'gen')
         ]);
     });
-    $router->get("/thread/[i:id]", function () use ($twig) {
+    $router->get("/thread/[i:id]", function ($req) use ($twig) {
+        $thread_id = $req->id;
         return $twig->render('public_thread.twig', [
             'userLogged' => isLoggedUser(),
-            'threadData' => callAPI('threads', 'get')
+            'threadData' => callAPI('threads', 'getbyid', ['thread_id' => $thread_id])
         ]);
     });
 });

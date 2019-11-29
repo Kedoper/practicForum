@@ -2,6 +2,57 @@
 
 {% block pageContent %}
     <div class="thread-page">
-        asas
+        <div class="thread-box thread-box__left-side">
+            <div class="user-avatar">
+                <span>K</span>
+            </div>
+        </div>
+        <div class="thread-box thread-box__right-side">
+            <div class="thread-box-content">
+                <div class="thread-box-content__header">
+                    <div class="thread-box-content-username-date">
+                        <div class="thread-box-content__username">
+                            <span>kFerst</span>
+                        </div>
+                        <div class="thread-box-content__date">
+                            <span>6 Янв,2019</span>
+                        </div>
+                    </div>
+                    <div class="thread-box-content__title">
+                        <span>Some page title</span>
+                    </div>
+                    <div class="thread-box-content__tags">
+                        <ul class="threads-item__category-items">
+                            <li class="threads-item__category-items__item ">Test</li>
+                            <li class="threads-item__category-items__item tag">Test2</li>
+                            <li class="threads-item__category-items__item tag">Test3</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="thread-box-content__body">
+                    {% autoescape %}
+                        {{ threadData.content|raw }}
+                    {% endautoescape %}
+                    {#                    <textarea id="test" style="width: 100%;" rows="20"></textarea>#}
+                </div>
+                <div class="thread-box-content__footer">
+                    <ul class="action-list">
+                        <li class="action-list__item">Like</li>
+                        <li class="action-list__item">Dislike</li>
+                        <li class="action-list__item">Fav</li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
+{% endblock %}
+{% block scripts %}
+    <script src="/libs/textEditor/nicEdit.js"></script>
+    <script>
+        // let editor = new nicEditor({
+        //     iconsPath: "/libs/textEditor/nicEditorIcons.gif",
+        //     fullPanel: true,
+        // }).panelInstance('test')
+    </script>
 {% endblock %}
