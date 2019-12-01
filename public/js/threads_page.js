@@ -18,8 +18,8 @@ function hidePageModal() {
 }
 
 function addNewComment() {
-    if (quill.getLength() > 10) {
-        let comment = quill.container.children[0].innerHTML;
+    if (editor.getLength() > 10) {
+        let comment = editor.container.children[0].innerHTML;
 
         let xr = new XMLHttpRequest(),
             body = JSON.stringify({
@@ -28,7 +28,7 @@ function addNewComment() {
             });
         xr.open('POST', '/api/comments.new');
         xr.send(body);
-        quill.deleteText(0, quill.getLength());
+        editor.deleteText(0, editor.getLength());
         xr.onreadystatechange = function () {
             if (xr.readyState === 4 && xr.status === 200) {
                 let response = JSON.parse(xr.response);
@@ -105,13 +105,17 @@ function renderComments(comments) {
         commentsList.push(newComment);
     });
     commentsListWrapper.innerHTML = commentsList.join('');
+    document.querySelectorAll('img').forEach(value => {
+        value.classList.add("spotlight");
+        // value.title = "Нажмите для просмотра";
+    })
 }
 
 
 hljs.configure({
     languages: ['php', 'javascript', 'ruby', 'python']
 });
-let quill = new Quill('#newComment', {
+let editor = new Quill('#newComment', {
     theme: "snow",
     placeholder: 'Время что-то написать...',
     modules: {
