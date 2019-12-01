@@ -28,7 +28,7 @@ function addNewComment() {
             });
         xr.open('POST', '/api/comments.new');
         xr.send(body);
-        quill.deleteText(0,quill.getLength());
+        quill.deleteText(0, quill.getLength());
         xr.onreadystatechange = function () {
             if (xr.readyState === 4 && xr.status === 200) {
                 let response = JSON.parse(xr.response);
@@ -108,7 +108,6 @@ function renderComments(comments) {
 }
 
 
-
 hljs.configure({
     languages: ['php', 'javascript', 'ruby', 'python']
 });
@@ -118,6 +117,7 @@ let quill = new Quill('#newComment', {
     modules: {
         syntax: true,
         toolbar: [
+            ['formula'],
             ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
             ['blockquote', 'code-block'],
 

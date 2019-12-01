@@ -21,6 +21,13 @@ $page_wPadding: 260px;
   font-family: 'Lato', sans-serif;
 }
 
+blockquote {
+  border-left: 4px solid #ccc;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  padding-left: 16px;
+}
+
 body {
   scroll-behavior: smooth;
 
@@ -500,8 +507,18 @@ header {
     margin-bottom: 20px;
     width: inherit;
 
+    & > .ql-syntax {
+      background-color: #23241f;
+      white-space: pre-wrap;
+      margin-bottom: 5px;
+      margin-top: 5px;
+      padding: 5px 10px;
+      border-radius: 5px;
+      color: white;
+    }
+
     img {
-      max-width: 20%;
+      max-width: 100%;
     }
   }
 }
