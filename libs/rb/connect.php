@@ -11,8 +11,8 @@ R::ext('xdispense', function ($type) {
     return R::getRedBean()->dispense($type);
 });
 
-session_save_path($_SERVER['DOCUMENT_ROOT'].'/tmp/sessions');
-session_start();
+//session_save_path($_SERVER['DOCUMENT_ROOT'].'/tmp/sessions');
+//session_start();
 if (!R::testConnection()) {
     throw new Exception("Error to connect database");
 }

@@ -5,9 +5,9 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% block header %}{% endblock %}
     <link rel="stylesheet" href="/public/css/index.css">
     <link rel="stylesheet" href="/libs/fontawesome/fontawesome.css">
-    {% block header %}{% endblock %}
     <title>Форум {% block pageTitle %}{% endblock %}</title>
 </head>
 <body>
@@ -51,6 +51,11 @@
         </button>
     {% endif %}
 </header>
+<div class="modal-message__wrap hidden" id="pageModal">
+    <div class="modal-message__box">
+
+    </div>
+</div>
 <section class="page-content">
     {% block pageContent %}
     {% endblock %}

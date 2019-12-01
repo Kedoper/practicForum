@@ -1,6 +1,6 @@
 <?php
 header('Content-type: Application/json');
-$faker = \Faker\Factory::create();
+$faker = \Faker\Factory::create("RU_ru");
 
 $response = [];
 
@@ -16,7 +16,7 @@ for ($i = 0; $i < 40; $i++) {
         $tmpTags[] = $faker->realText(10);
     }
     $response['threads'][] = [
-        'id' => rand(1, 9999),
+        'id' =>$i+1,
         'title' => $faker->realText(40),
         'category' => $tmpCategory,
         'tags' => $tmpTags,
