@@ -1,16 +1,16 @@
 <?php
-include dirname(__DIR__).'/vendor/autoload.php';
+include dirname(__DIR__) . '/vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::create(dirname(__DIR__));
 $dotenv->load();
 $_callType = 'cron';
-include dirname(__DIR__).'/libs/rb/connect.php';
+include dirname(__DIR__) . '/libs/rb/connect.php';
 /*
  * Данный скрипт обновляет таблицу тем в Redis каждые 20 минут.
  *
  * Индекс базы для хранения тем - 1
  * */
 
-file_put_contents(dirname(__DIR__).'/logs/cron/updateThreads.log', '[' . date("d.m.Y H:i:s") . "] | Starting cron work\n", FILE_APPEND);
+file_put_contents(dirname(__DIR__) . '/logs/cron/updateThreads.log', '[' . date("d.m.Y H:i:s") . "] | Starting cron work\n", FILE_APPEND);
 
 $redis = new Redis;
 
@@ -23,7 +23,9 @@ $threadsList = R::findCollection('threads');
 $redis->multi();
 $redis->flushDB();
 while ($thread = $threadsList->next()) {
-    $redis->set("thread_{$thread['id']}", json_encode($thread->export()));
+    $thread_ = $thread->export();
+    $thread_['tags'] = json_decode($thread_['tags'], true);
+    $redis->set("thread_{$thread['id']}", json_encode($thread_));
 }
 $redis->exec();
-file_put_contents(dirname(__DIR__).'/logs/cron/updateThreads.log', '[' . date("d.m.Y H:i:s") . "] | Success end cron work\n", FILE_APPEND);
+file_put_contents(dirname(__DIR__) . '/logs/cron/updateThreads.log', '[' . date("d.m.Y H:i:s") . "] | Success end cron work\n", FILE_APPEND);

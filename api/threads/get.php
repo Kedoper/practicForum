@@ -12,7 +12,7 @@ $tmp = [];
 foreach ($threads as $thread) {
     $th = json_decode($redis->get($thread), true);
     $tmp[$th['id']] = $th;
-    $tmp[$th['id']]['tags'] = json_decode($th['tags'], true);
+//    $tmp[$th['id']]['tags'] = json_decode($th['tags'], true);
 }
 ksort($tmp);
 $response['threads'] = $tmp;

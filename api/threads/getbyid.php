@@ -14,7 +14,7 @@ $thread = $redis->get("thread_{$data['thread_id']}");
 $thread = json_decode($thread, true);
 
 $response = $thread;
-$response['tags'] = json_decode($thread['tags'], true);
+//$response['tags'] = json_decode($thread['tags'], true);
 $response['content'] = $text;
 print_r(json_encode($response));
 //print_r(json_encode([
