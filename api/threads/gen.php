@@ -4,6 +4,10 @@ $faker = \Faker\Factory::create("RU_ru");
 
 $response = [];
 
+$redis = new Redis;
+
+$redis->connect('127.0.0.1', 6379);
+$redis->select(1);
 
 for ($i = 0; $i < 40; $i++) {
     $tmpCategory = [];
@@ -16,7 +20,7 @@ for ($i = 0; $i < 40; $i++) {
         $tmpTags[] = $faker->realText(10);
     }
     $response['threads'][] = [
-        'id' =>$i+1,
+        'id' => $i + 1,
         'title' => $faker->realText(40),
         'category' => $tmpCategory,
         'tags' => $tmpTags,
@@ -29,5 +33,7 @@ for ($i = 0; $i < 40; $i++) {
     unset($tmpCategory, $tmpTags);
 }
 
-
+foreach ($response['threads'] as $thread) {
+    $redis->set("thread_{$thread['id']}", json_encode($thread));
+}
 echo json_encode($response);

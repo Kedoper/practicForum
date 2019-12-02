@@ -42,7 +42,7 @@ $router->with('/?', function () use ($router, $twig) {
     $router->get("/", function () use ($twig) {
         return $twig->render('public_index.twig', [
             'userLogged' => isLoggedUser(),
-            'threadsData' => callAPI('threads', 'gen')
+            'threadsData' => callAPI('threads', 'get')
         ]);
     });
     $router->get("/thread/[i:id]", function ($req) use ($twig) {
