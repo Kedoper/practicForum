@@ -1,4 +1,4 @@
-{% extends "tamplate_public_indexPage.twig" %}
+{% extends "template_public_indexPage.twig" %}
 
 {% block pageContent %}
     <div class="threads">
@@ -40,9 +40,7 @@
                     </div>
                     <div class="threads-item__category">
                         <ul class="threads-item__category-items">
-                            {% for category in threadItem.category %}
-                                <li class="threads-item__category-items__item">{{ category }}</li>
-                            {% endfor %}
+                            <li class="threads-item__category-items__item">{{ threadItem.category }}</li>
                         </ul>
                     </div>
                     <div class="threads-item__likes">

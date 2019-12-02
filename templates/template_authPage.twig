@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/public/css/auth.css">
+    <link rel="stylesheet" href="/libs/fontawesome/fontawesome.css">
+    <title>Форум - {% block action %}{% endblock %}</title>
+</head>
+<body>
+
+<section class="form-wrap">
+    <div class="actionLoad hide">
+        <div class="actionLoad-icon">
+            <i class="fa fa-spinner-third"></i>
+        </div>
+        <div class="actionLoad-message">
+            <span>Идет обработка данных, подождите</span>
+        </div>
+    </div>
+    <a href="/" class="auth-title__wrap">
+        <div class="page-logo"></div>
+        <div class="auth-title">
+            <span>Добро пожаловать на форум kSocial</span>
+        </div>
+        <div class="auth-description">
+            {% if action == "login" %}
+                <span>Войдите, чтобы продолжить увлекательное общение.</span>
+            {% else %}
+                <span>Присоединяйтесь к нам, чтобы начать увлекательное общение.</span>
+            {% endif %}
+        </div>
+    </a>
+    <form>
+        <input type="text" hidden readonly name="formAction" value="{{ action }}">
+        {% if action == "login" %}
+            <div class="form-group">
+                <label class="form-auth" for="userLogin">Ваш логин</label>
+                <input class="form-control" type="text" name="userLogin" id="userLogin" placeholder="kFerst">
+            </div>
+            <div class="form-group">
+                <label class="form-auth" for="userPassword">Ваш пароль</label>
+                <input class="form-control" type="password" name="userPassword" id="userPassword"
+                       placeholder="************">
+            </div>
+            <div class="form-group form-group__buttons">
+                <button type="submit" class="button button-primary button-fullW button-hover__dark">Войти</button>
+            </div>
+            <p>Нет аккаунта? <a href="/auth/register" class="link-underline">Зарегистрируйтесь тут</a></p>
+        {% else %}
+            <div class="form-group">
+                <label class="form-auth" for="userLogin">Придумайте себе прозвище</label>
+                <input class="form-control" type="text" name="userLogin" id="userLogin" placeholder="Ar1us">
+            </div>
+            <div class="form-group">
+                <label class="form-auth" for="userEmail">Введите вашу почту</label>
+                <input class="form-control" type="email" name="userEmail" id="userEmail"
+                       placeholder="my-mail@mail.com">
+            </div>
+            <div class="form-group">
+                <label class="form-auth" for="userPassword">Придумайте пароль</label>
+                <input class="form-control" type="password" name="userPassword" id="userPassword"
+                       placeholder="************">
+            </div>
+            <div class="form-group form-group__buttons">
+                <button type="submit" class="button button-primary button-fullW button-hover__dark">Зарегистрироваться
+                </button>
+            </div>
+            <p>Уже с нами? <a href="/auth/login" class="link-underline">Войдите тут</a></p>
+        {% endif %}
+        <div class="notice-box">
+            <p>Входя, регистрируясь или продолжая находится тут, Я соглашаюсь со правилами форума kSocial, а так же с
+                политикой конфиденциальности.</p>
+        </div>
+    </form>
+</section>
+
+<script src="/public/js/authPage.js"></script>
+</body>
+</html>

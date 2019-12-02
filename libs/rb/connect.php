@@ -12,7 +12,13 @@ R::ext('xdispense', function ($type) {
 });
 
 //session_save_path($_SERVER['DOCUMENT_ROOT'].'/tmp/sessions');
-//session_start();
+
+/* Запуск сессии только в том случае, если это не cron-задача */
+if (!$_callType || $_callType === null || $_callType !== "cron") {
+    /* Сессии хранятся в Redis */
+    session_start();
+}
+
 if (!R::testConnection()) {
     throw new Exception("Error to connect database");
 }

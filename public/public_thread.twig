@@ -1,4 +1,4 @@
-{% extends "tamplate_public_indexPage.twig" %}
+{% extends "template_public_indexPage.twig" %}
 
 {% block pageContent %}
     <div class="thread-page">
@@ -19,13 +19,14 @@
                         </div>
                     </div>
                     <div class="thread-box-content__title">
-                        <span>Some page title</span>
+                        <span>{{ threadData.title }}</span>
                     </div>
                     <div class="thread-box-content__tags">
                         <ul class="threads-item__category-items">
-                            <li class="threads-item__category-items__item ">Test</li>
-                            <li class="threads-item__category-items__item tag">Test2</li>
-                            <li class="threads-item__category-items__item tag">Test3</li>
+                            <li class="threads-item__category-items__item ">{{ threadData.category }}</li>
+                            {% for tag in threadData.tags %}
+                                <li class="threads-item__category-items__item tag">{{ tag }}</li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>
@@ -33,25 +34,24 @@
                     {% autoescape %}
                         {{ threadData.content|raw }}
                     {% endautoescape %}
-                    {#                    <textarea id="test" style="width: 100%;" rows="20"></textarea>#}
                 </div>
-                <div class="thread-box-content__footer">
-                    <ul class="action-list">
-                        <li class="action-list__item active">
-                            <i class="fas fa-thumbs-up"></i>
-                            <span class="action-list__item-counter">434k</span>
-                        </li>
-                        <li class="action-list__item">
-                            <i class="fas fa-thumbs-down"></i>
-                            <span class="action-list__item-counter">51k</span>
-                        </li>
-                        <li class="action-list__item">
-                            <i class="fas fa-heart"></i>
-                            <span class="action-list__item-counter">241k</span>
-                        </li>
+                {#                <div class="thread-box-content__footer">#}
+                {#                    <ul class="action-list">#}
+                {#                        <li class="action-list__item active">#}
+                {#                            <i class="fas fa-thumbs-up"></i>#}
+                {#                            <span class="action-list__item-counter">{{ threadData.like }}</span>#}
+                {#                        </li>#}
+                {#                        <li class="action-list__item">#}
+                {#                            <i class="fas fa-thumbs-down"></i>#}
+                {#                            <span class="action-list__item-counter">{{ threadData.dislike }}</span>#}
+                {#                        </li>#}
+                {#                        <li class="action-list__item">#}
+                {#                            <i class="fas fa-heart"></i>#}
+                {#                            <span class="action-list__item-counter">{{ threadData.fav }}</span>#}
+                {#                        </li>#}
 
-                    </ul>
-                </div>
+                {#                    </ul>#}
+                {#                </div>#}
             </div>
         </div>
     </div>
@@ -62,37 +62,37 @@
                 <li class="thread-stats__status__list-item">
                     <div class="list-item-wrapper">
                         <i class="fas fa-reply"></i>
-                        <span class="thread-stats__status__list-counter">40k</span>
+                        <span class="thread-stats__status__list-counter">{{ threadData.replies }}</span>
                     </div>
                 </li>
                 <li class="thread-stats__status__list-item">
                     <div class="list-item-wrapper">
                         <i class="fas fa-eye"></i>
-                        <span class="thread-stats__status__list-counter">901k</span>
+                        <span class="thread-stats__status__list-counter">{{ threadData.views }}</span>
                     </div>
                 </li>
-                <li class="thread-stats__status__list-item">
-                    <div class="list-item-wrapper">
-                        <i class="fas fa-user"></i>
-                        <span class="thread-stats__status__list-counter">43k</span>
-                    </div>
-                </li>
+                {#                <li class="thread-stats__status__list-item">#}
+                {#                    <div class="list-item-wrapper">#}
+                {#                        <i class="fas fa-user"></i>#}
+                {#                        <span class="thread-stats__status__list-counter">0</span>#}
+                {#                    </div>#}
+                {#                </li>#}
                 <li class="thread-stats__status__list-item">
                     <div class="list-item-wrapper">
                         <i class="fas fa-thumbs-up"></i>
-                        <span class="thread-stats__status__list-counter">553k</span>
+                        <span class="thread-stats__status__list-counter">{{ threadData.likes }}</span>
                     </div>
                 </li>
                 <li class="thread-stats__status__list-item">
                     <div class="list-item-wrapper">
                         <i class="fas fa-heart"></i>
-                        <span class="thread-stats__status__list-counter">600k</span>
+                        <span class="thread-stats__status__list-counter">{{ threadData.fav }}</span>
                     </div>
                 </li>
                 <li class="thread-stats__status__list-item">
                     <div class="list-item-wrapper">
                         <i class="fas fa-share-alt"></i>
-                        <span class="thread-stats__status__list-counter">65k</span>
+                        <span class="thread-stats__status__list-counter">{{ threadData.shared }}</span>
                     </div>
                 </li>
             </ul>
@@ -148,7 +148,7 @@
                 <ul class="action-list">
                     <li class="action-list__item">
                         <button class="button button-primary" id="addCommentBtn"
-                                data-thread="{{ threadData.thread_id }}">
+                                data-thread="{{ threadData.id }}">
                             Отправить
                         </button>
                     </li>

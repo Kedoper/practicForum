@@ -8,9 +8,9 @@ while ($comment = $comments->next()) {
     $response[] = [
         'datetime' => date('d.m.Y H:i',$comment['datetime']),
         'content' => json_decode($comment['content'], true),
-        'like' => $comment['likes'],
-        'dislike' => $comment['dislikes'],
-        'fav' => $comment['fav'],
+        'like' => count(json_decode($comment['likes']),true),
+        'dislike' => count(json_decode($comment['dislikes']),true),
+        'fav' => count(json_decode($comment['fav']),true),
     ];
 }
 

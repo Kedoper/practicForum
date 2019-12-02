@@ -15,10 +15,12 @@ if (boolval(getenv("DEBUG"))) {
         ->prependHandler(new \Whoops\Handler\PrettyPageHandler)
         ->register();
 }
+
 include './libs/rb/connect.php';
 
 $router = new \Klein\Klein();
-$_SESSION['logged_user'][1] = 'pklds';
+
+
 function isLoggedUser(): bool
 {
     if (!empty($_SESSION['logged_user'])) {
@@ -42,14 +44,37 @@ $router->with('/?', function () use ($router, $twig) {
     $router->get("/", function () use ($twig) {
         return $twig->render('public_index.twig', [
             'userLogged' => isLoggedUser(),
-            'threadsData' => callAPI('threads', 'gen')
+            'threadsData' => callAPI('threads', 'get')
         ]);
     });
+
     $router->get("/thread/[i:id]", function ($req) use ($twig) {
         $thread_id = $req->id;
         return $twig->render('public_thread.twig', [
             'userLogged' => isLoggedUser(),
             'threadData' => callAPI('threads', 'getbyid', ['thread_id' => $thread_id])
+        ]);
+    });
+
+    $router->get("/logout", function () use ($router) {
+        session_destroy();
+        $router->response()->redirect('/');
+    });
+});
+
+
+$router->with('/auth/?', function () use ($router, $twig) {
+    $router->get("/*", function () use ($router) {
+        $router->response()->redirect("/auth/login");
+    });
+    $router->get("/login", function () use ($twig) {
+        return $twig->render('template_authPage.twig', [
+            'action' => 'login'
+        ]);
+    });
+    $router->get("/register", function () use ($twig) {
+        return $twig->render('template_authPage.twig', [
+            'action' => 'register'
         ]);
     });
 });

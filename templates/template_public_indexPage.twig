@@ -41,8 +41,8 @@
                 </div>
             </div>
         {% else %}
-            <button type="button" class="button button-default">Войти</button>
-            <button type="button" class="button button-primary">Присоединиться</button>
+            <button type="button" class="button button-default" onclick="location.href='/auth'">Войти</button>
+            <button type="button" class="button button-primary" onclick="location.href='/auth/register'">Присоединиться</button>
         {% endif %}
     </div>
     {% if userLogged %}
