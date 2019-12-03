@@ -51,6 +51,17 @@ function updateThreadStats($thread_id): void
     setcookie('threads', json_encode($userView));
 }
 
+function renderErrorPage(int $code): void
+{
+    global $twig;
+    global $router;
+    $router->response()->code(404);
+    $router->response()->body($twig->render("error404.twig", [
+        'userLogged' => isLoggedUser(),
+        'userData' => getUserSessionData(),
+    ]));
+}
+
 
 function callAPI(string $section, string $method, ?array $params = []): array
 {
@@ -75,13 +86,24 @@ $router->with('/?', function () use ($router, $twig) {
         ]);
     });
 
-    $router->get("/thread/[i:id]", function ($req) use ($twig) {
+    $router->get("/thread/[i:id]", function ($req) use ($twig, $router) {
         $thread_id = $req->id;
         updateThreadStats($thread_id);
+        $thread = callAPI('threads', 'getbyid', ['thread_id' => $thread_id]);
+        if (empty($thread)) {
+            return renderErrorPage(404);
+        }
         return $twig->render('public_thread.twig', [
             'userLogged' => isLoggedUser(),
             'userData' => getUserSessionData(),
-            'threadData' => callAPI('threads', 'getbyid', ['thread_id' => $thread_id])
+            'threadData' => $thread
+        ]);
+    });
+
+    $router->get("/thread/new", function () use ($twig) {
+        return $twig->render('public_create_thread.twig', [
+            'userLogged' => isLoggedUser(),
+            'userData' => getUserSessionData(),
         ]);
     });
 
@@ -96,12 +118,14 @@ $router->with('/auth/?', function () use ($router, $twig) {
     $router->get("/*", function () use ($router) {
         $router->response()->redirect("/auth/login");
     });
-    $router->get("/login", function () use ($twig) {
+    $router->get("/login", function () use ($twig, $router) {
+        if (isLoggedUser()) $router->response()->redirect("/");
         return $twig->render('template_authPage.twig', [
             'action' => 'login'
         ]);
     });
-    $router->get("/register", function () use ($twig) {
+    $router->get("/register", function () use ($twig, $router) {
+        if (isLoggedUser()) $router->response()->redirect("/");
         return $twig->render('template_authPage.twig', [
             'action' => 'register'
         ]);
@@ -116,6 +140,10 @@ $router->respond(['GET', 'POST'], '/api/[*:section].[*:method]', function ($req)
     } else {
         echo json_encode([]);
     }
+});
+
+$router->onHttpError(function () use ($twig) {
+    renderErrorPage(404);
 });
 
 $router->dispatch();

@@ -10,14 +10,13 @@ try {
         modules: {
             syntax: true,
             toolbar: [
-                ['formula'],
                 ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
                 ['blockquote', 'code-block'],
 
                 [{'header': 1}, {'header': 2}],               // custom button values
                 [{'list': 'ordered'}, {'list': 'bullet'}],
                 [{'script': 'sub'}, {'script': 'super'}],      // superscript/subscript
-                [{'indent': '-1'}, {'indent': '+1'}],          // outdent/indent
+                [{'indent': '-1'}, {'indent': '+1'}, {'align': []}],          // outdent/indent
                 [{'direction': 'rtl'}],                         // text direction
 
                 [{'size': ['small', false, 'large', 'huge']}],  // custom dropdown
@@ -25,12 +24,18 @@ try {
 
                 [{'color': []}, {'background': []}],          // dropdown with defaults from theme
                 [{'font': []}],
-                [{'align': []}],
 
+
+                ['formula'],
                 ['image', 'video'],
 
                 ['clean']
             ],
+            // history: {
+            //     delay: 1000,
+            //     maxStack: 5000,
+            //     userOnly: true
+            // }
         }
     });
 } catch (e) {
@@ -98,13 +103,17 @@ function renderComments(comments) {
     let commentsListWrapper = document.getElementById('threadCommentsList'),
         commentsList = [];
     comments.map(comments => {
+        let userAvatar = `<div class="user-avatar">${comments.author[0].toUpperCase()}</div>`;
+        if (comments.avatar) {
+            userAvatar = ` <div class="user-avatar" style="background: none"><img class="uAvatar" src="${comments.avatar}" alt="${comments.author} avatar" width="40"
+                             height="40"></div>`;
+        }
         let newComment = `
      <li class="comments-list__item">
                 <div class="comment">
                     <div class="comment-col">
-                        <div class="user-avatar">
-                            ${comments.author[0].toUpperCase()}
-                        </div>
+                            ${userAvatar}
+                        
                     </div>
                     <div class="comment-col">
                         <div class="comment-header">
@@ -142,7 +151,9 @@ function renderComments(comments) {
     });
     commentsListWrapper.innerHTML = commentsList.join('');
     document.querySelectorAll('img').forEach(value => {
-        value.classList.add("spotlight");
+        if (!value.classList.contains('uAvatar')) {
+            value.classList.add("spotlight");
+        }
         // value.title = "Нажмите для просмотра";
     })
 }

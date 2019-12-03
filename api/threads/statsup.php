@@ -11,9 +11,14 @@ $redis->select(1);
 
 
 $thread = R::load('threads', $data['thread_id']);
-$thread->views = $thread->views + 1;
-R::store($thread);
+if ($thread['id'] !== 0) {
+    $thread->views = $thread->views + 1;
+    R::store($thread);
 
-$redis->set("thread_{$data['thread_id']}", json_encode(R::load('threads', $data['thread_id'])->export()));
+    unset($thread);
+    $thread = R::load('threads', $data['thread_id'])->export();
+    $thread['tags'] = json_decode($thread['tags'], true);
 
+    $redis->set("thread_{$data['thread_id']}", json_encode($thread));
+}
 print_r(json_encode($response));

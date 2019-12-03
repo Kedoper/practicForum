@@ -20,6 +20,17 @@ $thread = R::load('threads', $data['thread']);
 $thread->replies = $thread->replies + 1;
 R::store($thread);
 
+$redis = new Redis;
+
+$redis->connect('127.0.0.1');
+$redis->select(1);
+
+unset($thread);
+$thread = R::load('threads', $data['thread'])->export();
+$thread['tags'] = json_decode($thread['tags'], true);
+
+$redis->set("thread_{$data['thread']}", json_encode($thread));
+
 $response['comment_id'] = $newComment_id;
 print_r(json_encode($response));
 

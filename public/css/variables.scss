@@ -30,7 +30,7 @@
   --red: #f59898;
   --link_color: #303344;
   --black: #333;
-  --page_wPadding: 260px;
+  --page_wPadding: 360px;
 }
 
 @import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
@@ -215,14 +215,6 @@ header {
       }
 
       &-avatar {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: white;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        background-color: red;
         margin-right: 20px;
 
         & > span {
@@ -242,11 +234,12 @@ header {
   justify-content: center;
   align-items: center;
   color: white;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background-color: red;
   margin-right: 20px;
+  overflow: hidden;
 }
 
 .action-list {
@@ -334,6 +327,7 @@ header {
     &:focus {
       border-color: #2172cd;
     }
+
     &:not(textarea) {
       padding: 7px 12px 10px 13px;
       height: 39px;
@@ -354,6 +348,10 @@ header {
     width: 100%;
   }
 
+  &-lg {
+    min-width: 160px;
+  }
+
   &-default {
 
   }
@@ -368,10 +366,14 @@ header {
   }
 
   &.new-thread {
+    position: absolute;
+    right: 10px;
+    top: 15px;
+    z-index: 99999;
     border-radius: 50%;
     color: white;
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     font-size: 25px;
     background-color: var(--primary);
     display: flex;
@@ -461,6 +463,31 @@ header {
   }
 }
 
+.page-404 {
+  padding: 112px 0 17px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  & > svg {
+    width: 400px;
+  }
+
+  &__title {
+    color: var(--link_color);
+    font-size: 18px;
+    line-height: 1.3;
+    font-weight: 500;
+    margin-top: 64px;
+    padding-bottom: 8px;
+  }
+
+  &__description {
+    color: var(--gray_);
+  }
+}
+
 @keyframes loadingCircle {
   from {
     transform: rotate(-180deg);
@@ -484,7 +511,7 @@ header {
 }
 
 iframe.ql-align-center {
-  height: 310px;
+  height: 420px;
   width: 60%;
 }
 
@@ -496,4 +523,47 @@ iframe.ql-align-center {
 
 .ql-editor {
   min-height: 90px;
+}
+
+
+/* Large desktops and laptops */
+@media (min-width: 1600px) and (max-width: 1900px) {
+  :root {
+    --page_wPadding: 260px;
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1599px) {
+  :root {
+    --page_wPadding: 100px;
+  }
+}
+
+/* Portrait tablets and medium desktops */
+@media (min-width: 992px) and (max-width: 1199px) {
+  :root {
+    --page_wPadding: 20px;
+  }
+  .button {
+    &.new-thread {
+      top: unset;
+      bottom: 30px;
+    }
+  }
+
+}
+
+/* Portrait tablets and small desktops */
+@media (min-width: 768px) and (max-width: 991px) {
+
+}
+
+/* Landscape phones and portrait tablets */
+@media (max-width: 767px) {
+
+}
+
+/* Landscape phones and smaller */
+@media (max-width: 480px) {
+
 }

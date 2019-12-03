@@ -33,35 +33,43 @@
                 <i class="fas fa-bell"></i>
             </div>
             <div class="page-profile__user-box">
-                <div class="page-profile__user-avatar">
-                    <span>{{ userData.login|striptags|first|upper }}</span>
+
+                {% if userData.avatar %}
+                    {% set avatarStyles = "style=background:none;" %}
+                {% endif %}
+                <div class="page-profile__user-avatar user-avatar" {{ avatarStyles }}>
+                    {% if userData.avatar %}
+                        <img class="uAvatar" src="{{ userData.avatar }}" alt="{{ userData.login }} avatar" width="40"
+                             height="40">
+                    {% else %}
+                        <span>{{ userData.login|striptags|first|upper }}</span>
+                    {% endif %}
                 </div>
                 <div class="page-profile__user-name">
                     <span>{{ userData.login }}</span>
                 </div>
             </div>
         {% else %}
-            <button type="button" class="button button-default" onclick="location.href='/auth'">Войти</button>
-            <button type="button" class="button button-primary" onclick="location.href='/auth/register'">
+            <button type="button" class="button button-default button-hover button-hover__dark"
+                    onclick="location.href='/auth'">Войти
+            </button>
+            <button type="button" class="button button-primary button-hover button-hover__dark"
+                    onclick="location.href='/auth/register'">
                 Присоединиться
             </button>
         {% endif %}
     </div>
-    {% if userLogged %}
-        <button type="button" class="button button-transparent new-thread">
-            <i class="fal fa-plus"></i>
-        </button>
-    {% endif %}
 </header>
-<div class="modal-message__wrap hidden" id="pageModal">
-    <div class="modal-message__box">
-
-    </div>
-</div>
 <section class="page-content">
     {% block pageContent %}
     {% endblock %}
 </section>
+{% if userLogged %}
+    <button type="button" class="button button-transparent new-thread">
+        <i class="fal fa-plus"></i>
+    </button>
+{% endif %}
 {% block scripts %}{% endblock %}
+<script src="/public/js/index.js"></script>
 </body>
 </html>
