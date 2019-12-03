@@ -1,0 +1,17 @@
+<svg viewBox="20 30.5 160.10000610351562 139" height="139" width="160.10000610351562"
+     xmlns="http://www.w3.org/2000/svg" data-type="color">
+    <g>
+        <path d="M120 100l-20.1 34.7-20.1-35L99.9 65l20.1 35z" data-color="1" fill="#b0deff"></path>
+        <path d="M120 99.9l20.1 34.9 40-.1L160 99.8l-40 .1z" data-color="2" fill="#66bfff"></path>
+        <path d="M180 65.4l-20.1-34.9-40 .1L140 65.5l40-.1z" data-color="2" fill="#66bfff"></path>
+        <path d="M100.1 64.9l-40 .1 20.1 35 40-.1-20.1-35z" data-color="2" fill="#66bfff"></path>
+        <path d="M140 65.5l-20-34.9-20.1 34.7 20 34.8-20 34.5 20.1 34.9 20.1-34.7-20-34.8c-.1.1 19.9-34.5 19.9-34.5z"
+              data-color="1" fill="#b0deff"></path>
+        <path d="M40.2 99.6l-.1-.1L20 134.2l20.1 34.9 20-34.6.1.1 20-34.6-20-35-20 34.6z" data-color="1"
+              fill="#b0deff"></path>
+        <path d="M120 169.5l40-.1 20.1-34.7-40 .1-20.1 34.7z" data-color="3" fill="#4d6d8a"></path>
+        <path d="M139.8 134.5l19.9-34.4h.2L180 65.4l-40 .1-19.9 34.3-39.9.2-19.9 34.4h-.2L40 169.1l40-.1 19.9-34.3 39.9-.2z"
+              data-color="3" fill="#4d6d8a"></path>
+    </g>
+</svg>
+

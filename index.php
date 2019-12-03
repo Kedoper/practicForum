@@ -29,6 +29,29 @@ function isLoggedUser(): bool
     return false;
 }
 
+function getUserSessionData(): array
+{
+    return $_SESSION['logged_user'] ? $_SESSION['logged_user'] : [];
+}
+
+function updateUserSession(): void
+{
+    if (isLoggedUser()) {
+        $_SESSION['logged_user'] = R::load('users', $_SESSION['logged_user']['id'])->export();
+    }
+}
+
+function updateThreadStats($thread_id): void
+{
+    $userView = json_decode($_COOKIE['threads'], true) ? json_decode($_COOKIE['threads'], true) : [];
+    if (!in_array($thread_id, $userView)) {
+        callAPI('threads', 'statsup', ['thread_id' => $thread_id]);
+        $userView[] = $thread_id;
+    }
+    setcookie('threads', json_encode($userView));
+}
+
+
 function callAPI(string $section, string $method, ?array $params = []): array
 {
     $host = $_SERVER['HTTP_HOST'];
@@ -40,18 +63,24 @@ function callAPI(string $section, string $method, ?array $params = []): array
     return json_decode($response, true);
 }
 
+
 $router->with('/?', function () use ($router, $twig) {
+    $router->get("*", 'updateUserSession');
+
     $router->get("/", function () use ($twig) {
         return $twig->render('public_index.twig', [
             'userLogged' => isLoggedUser(),
+            'userData' => getUserSessionData(),
             'threadsData' => callAPI('threads', 'get')
         ]);
     });
 
     $router->get("/thread/[i:id]", function ($req) use ($twig) {
         $thread_id = $req->id;
+        updateThreadStats($thread_id);
         return $twig->render('public_thread.twig', [
             'userLogged' => isLoggedUser(),
+            'userData' => getUserSessionData(),
             'threadData' => callAPI('threads', 'getbyid', ['thread_id' => $thread_id])
         ]);
     });

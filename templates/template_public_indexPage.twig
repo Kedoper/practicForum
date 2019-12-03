@@ -34,15 +34,17 @@
             </div>
             <div class="page-profile__user-box">
                 <div class="page-profile__user-avatar">
-                    <span>K</span>
+                    <span>{{ userData.login|striptags|first|upper }}</span>
                 </div>
                 <div class="page-profile__user-name">
-                    <span>kFerst</span>
+                    <span>{{ userData.login }}</span>
                 </div>
             </div>
         {% else %}
             <button type="button" class="button button-default" onclick="location.href='/auth'">Войти</button>
-            <button type="button" class="button button-primary" onclick="location.href='/auth/register'">Присоединиться</button>
+            <button type="button" class="button button-primary" onclick="location.href='/auth/register'">
+                Присоединиться
+            </button>
         {% endif %}
     </div>
     {% if userLogged %}

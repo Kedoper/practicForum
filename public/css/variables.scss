@@ -146,7 +146,14 @@ header {
   &-logo {
     width: 50px;
     height: 50px;
-    background-color: #4288CE;
+    //background-color: #4288CE;
+    background-image: url("/public/images/logo.svg");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+
+
   }
 
   &-nav {
@@ -324,6 +331,9 @@ header {
     -webkit-transition: border-color .2s linear;
     transition: border-color .2s linear;
 
+    &:focus {
+      border-color: #2172cd;
+    }
     &:not(textarea) {
       padding: 7px 12px 10px 13px;
       height: 39px;
@@ -338,14 +348,10 @@ header {
   outline: none;
   cursor: pointer;
   background-color: var(--gray);
+  transition: background-color .4s, color .4s;
 
   &-fullW {
     width: 100%;
-    transition: background-color .4s;
-
-    &:hover {
-      background-color: var(--black);
-    }
   }
 
   &-default {
@@ -375,8 +381,10 @@ header {
 
   &-hover {
     &__dark {
-      color: white;
-
+      &:hover, &:focus {
+        color: white;
+        background-color: var(--black);
+      }
     }
   }
 }
@@ -429,6 +437,27 @@ header {
     & > i {
       animation: loadingCircle 0.9s infinite cubic-bezier(0.53, 0.57, 0.24, 0.32);
     }
+  }
+}
+
+.siteMessage {
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+
+  &.error {
+    background-color: var(--red_bg);
+    border: 1px solid var(--red);
+  }
+
+  &.success {
+    background-color: var(--green);
+    border: 1px solid var(--green_bg);
+    color: white;
+  }
+
+  &.hide {
+    display: none;
   }
 }
 

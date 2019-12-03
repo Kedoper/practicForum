@@ -24,6 +24,9 @@ $redis->multi();
 $redis->flushDB();
 while ($thread = $threadsList->next()) {
     $thread_ = $thread->export();
+    $threadComments = R::count('comments', 'WHERE thread_id = ?', [$thread['id']]);
+
+    $thread_['replies'] = $threadComments;
     $thread_['tags'] = json_decode($thread_['tags'], true);
     $redis->set("thread_{$thread['id']}", json_encode($thread_));
 }

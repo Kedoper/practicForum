@@ -28,7 +28,7 @@ function formHandler(e) {
         }
     }
 
-    let itemsWhichError = document.querySelectorAll('.error');
+    let itemsWhichError = document.querySelectorAll('.form-group.error');
 
     if (itemsWhichError.length === 0) {
         sendFormData(authData)
@@ -37,15 +37,35 @@ function formHandler(e) {
 
 function sendFormData(data) {
     let actionLoader = document.querySelector('.actionLoad'),
+        messageWrap = document.querySelector('.siteMessage'),
         xr = new XMLHttpRequest(),
         body = JSON.stringify(data);
+
+    messageWrap.classList.remove('error');
+    messageWrap.classList.remove('success');
+
     actionLoader.classList.remove("hide");
-    xr.open('POST', '/api/users.create');
+
+    xr.open('POST', '/api/users.auth');
     xr.send(body);
     xr.onreadystatechange = function () {
         if (xr.readyState === 4 && xr.status === 200) {
             let response = JSON.parse(xr.response);
-            actionLoader.classList.add('hide');
+
+            if (response.code !== 0) {
+                messageWrap.classList.remove('hide');
+                messageWrap.children[0].innerText = response.message;
+                messageWrap.classList.add('error');
+            } else {
+                document.querySelectorAll('input').forEach(input => input.disabled = true);
+                document.querySelectorAll('button').forEach(button => button.disabled = true);
+
+                messageWrap.children[0].innerText = "И так, все окей, сейчас отправим вас на форум!";
+                messageWrap.classList.add('success');
+                messageWrap.classList.remove('hide');
+                setTimeout(() => location.href = '/', 2000);
+            }
+            setTimeout(() => actionLoader.classList.add('hide'), 600);
         }
     }
 

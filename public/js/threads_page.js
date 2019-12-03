@@ -1,5 +1,40 @@
-document.getElementById('addCommentBtn').addEventListener('click', addNewComment);
+let editor;
+try {
+    document.getElementById('addCommentBtn').addEventListener('click', addNewComment);
+    hljs.configure({
+        languages: ['php', 'javascript', 'ruby', 'python']
+    });
+    editor = new Quill('#newComment', {
+        theme: "snow",
+        placeholder: 'Время что-то написать...',
+        modules: {
+            syntax: true,
+            toolbar: [
+                ['formula'],
+                ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+                ['blockquote', 'code-block'],
 
+                [{'header': 1}, {'header': 2}],               // custom button values
+                [{'list': 'ordered'}, {'list': 'bullet'}],
+                [{'script': 'sub'}, {'script': 'super'}],      // superscript/subscript
+                [{'indent': '-1'}, {'indent': '+1'}],          // outdent/indent
+                [{'direction': 'rtl'}],                         // text direction
+
+                [{'size': ['small', false, 'large', 'huge']}],  // custom dropdown
+                [{'header': [1, 2, 3, 4, 5, 6, false]}],
+
+                [{'color': []}, {'background': []}],          // dropdown with defaults from theme
+                [{'font': []}],
+                [{'align': []}],
+
+                ['image', 'video'],
+
+                ['clean']
+            ],
+        }
+    });
+} catch (e) {
+}
 
 loadComments().then(value => renderComments(value));
 
@@ -19,11 +54,12 @@ function hidePageModal() {
 
 function addNewComment() {
     if (editor.getLength() > 10) {
-        let comment = editor.container.children[0].innerHTML;
+        let comment = editor.container.children[0].innerHTML,
+            thread_id = document.querySelector('[data-thread]');
 
         let xr = new XMLHttpRequest(),
             body = JSON.stringify({
-                thread: this.dataset.thread,
+                thread: thread_id.dataset.thread,
                 comment: comment
             });
         xr.open('POST', '/api/comments.new');
@@ -43,7 +79,7 @@ function addNewComment() {
 function loadComments() {
     return new Promise(resolve => {
         let xr = new XMLHttpRequest(),
-            thread_id = document.getElementById('addCommentBtn'),
+            thread_id = document.querySelector('[data-thread]'),
             body = JSON.stringify({
                 thread: thread_id.dataset.thread,
             });
@@ -67,13 +103,13 @@ function renderComments(comments) {
                 <div class="comment">
                     <div class="comment-col">
                         <div class="user-avatar">
-                            F
+                            ${comments.author[0].toUpperCase()}
                         </div>
                     </div>
                     <div class="comment-col">
                         <div class="comment-header">
                             <div class="comment-header__username">
-                                <span>Ferlom189</span>
+                                <span>${comments.author}</span>
                             </div>
                             <div class="comment-header__date">
                                 <span>${comments.datetime}</span>
@@ -112,35 +148,4 @@ function renderComments(comments) {
 }
 
 
-hljs.configure({
-    languages: ['php', 'javascript', 'ruby', 'python']
-});
-let editor = new Quill('#newComment', {
-    theme: "snow",
-    placeholder: 'Время что-то написать...',
-    modules: {
-        syntax: true,
-        toolbar: [
-            ['formula'],
-            ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-            ['blockquote', 'code-block'],
 
-            [{'header': 1}, {'header': 2}],               // custom button values
-            [{'list': 'ordered'}, {'list': 'bullet'}],
-            [{'script': 'sub'}, {'script': 'super'}],      // superscript/subscript
-            [{'indent': '-1'}, {'indent': '+1'}],          // outdent/indent
-            [{'direction': 'rtl'}],                         // text direction
-
-            [{'size': ['small', false, 'large', 'huge']}],  // custom dropdown
-            [{'header': [1, 2, 3, 4, 5, 6, false]}],
-
-            [{'color': []}, {'background': []}],          // dropdown with defaults from theme
-            [{'font': []}],
-            [{'align': []}],
-
-            ['image', 'video'],
-
-            ['clean']
-        ],
-    }
-});
