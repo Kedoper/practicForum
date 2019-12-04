@@ -1,10 +1,18 @@
 {% extends "template_public_indexPage.twig" %}
 
 {% block pageContent %}
-    <div class="thread-page">
+    <div class="container">
         <div class="thread-box thread-box__left-side">
-            <div class="user-avatar">
-                <span>K</span>
+            {% if threadData.author.avatar %}
+                {% set avatarStyles = "style=background:none;" %}
+            {% endif %}
+            <div class="page-profile__user-avatar user-avatar" {{ avatarStyles }}>
+                {% if threadData.author.avatar %}
+                    <img class="uAvatar" src="{{ threadData.author.avatar }}" alt="{{ threadData.author.login }} avatar" width="40"
+                         height="40">
+                {% else %}
+                    <span>{{ threadData.author.login|striptags|first|upper }}</span>
+                {% endif %}
             </div>
         </div>
         <div class="thread-box thread-box__right-side">
@@ -12,10 +20,10 @@
                 <div class="thread-box-content__header">
                     <div class="thread-box-content-username-date">
                         <div class="thread-box-content__username">
-                            <span>kFerst</span>
+                            <span>{{ threadData.author.login }}</span>
                         </div>
                         <div class="thread-box-content__date">
-                            <span>6 Янв,2019</span>
+                            <span>{{ threadData.created|date("d.M.Y") }}</span>
                         </div>
                     </div>
                     <div class="thread-box-content__title">
@@ -55,7 +63,7 @@
             </div>
         </div>
     </div>
-    <div class="thread-stats__wrap">
+    <div class=" thread-stats__wrap">
         <div class="thread-stats__status">
             <h4>Статистика темы</h4>
             <ul class="thread-stats__status__list">
@@ -148,7 +156,8 @@
                 <div class="buttons">
                     <ul class="action-list">
                         <li class="action-list__item">
-                            <button class="button button-primary button-lg button-hover button-hover__dark" id="addCommentBtn">
+                            <button class="button button-primary button-lg button-hover button-hover__dark"
+                                    id="addCommentBtn">
                                 Отправить
                             </button>
                         </li>

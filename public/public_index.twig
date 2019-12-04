@@ -24,7 +24,17 @@
             {% for threadItem in threadsData.threads %}
                 <div class="threads-list__item threads-item" data-thread_id="{{ threadItem.id }}">
                     <div class="threads-item__avatar">
-                        <div class="simple-avatar"></div>
+                        {% if threadItem.author.avatar %}
+                            {% set avatarStyles = "style=background:none;" %}
+                        {% endif %}
+                        <div class="page-profile__user-avatar user-avatar" {{ avatarStyles }}>
+                            {% if threadItem.author.avatar %}
+                                <img class="uAvatar" src="{{ threadItem.author.avatar }}" alt="{{ threadItem.author.login }} avatar" width="40"
+                                     height="40">
+                            {% else %}
+                                <span>{{ threadItem.author.login|striptags|first|upper }}</span>
+                            {% endif %}
+                        </div>
                     </div>
                     <div class="threads-item__head">
                         <div class="threads-item__head-title">

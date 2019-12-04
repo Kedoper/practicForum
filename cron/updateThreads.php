@@ -29,6 +29,12 @@ while ($thread = $threadsList->next()) {
     R::store($thread);
     $thread_['replies'] = $threadComments;
     $thread_['tags'] = json_decode($thread_['tags'], true);
+    $author = R::load('users', $thread['user_id']);
+    $thread_['author'] = [
+        'id' => $author['id'],
+        'login' => $author['login'],
+        'avatar' => $author['avatar']
+    ];
     $redis->set("thread_{$thread['id']}", json_encode($thread_));
 }
 $redis->exec();

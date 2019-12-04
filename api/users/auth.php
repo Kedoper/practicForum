@@ -49,7 +49,7 @@ function createUser($data): array
             $newUser->password = password_hash($data['userPassword'], PASSWORD_DEFAULT);
             $newUser->privileges = Privileges::getDefaultMask();
             $newUser->registered = time();
-            $newUser->avatar = "https://avatars0.githubusercontent.com/u/23498262?s=460&v=4";
+            $newUser->avatar = "";
             $newUser->punishment = json_encode([]);
             $newUser->last_login = time();
             $newUser->likes = json_encode([]);
